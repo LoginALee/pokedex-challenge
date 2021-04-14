@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './PokemonList.css';
 import PokemonCard from '../PokemonCard/PokemonCard';
 
-const PokemonList = () => {
+const PokemonList = (props) => {
+  const { onAdd } = props;
   const [data, setData] = useState(null);
   const fetchURL = "https://pokeapi.co/api/v2/pokemon?limit=30";
   const imageURL = 'https://pokeres.bastionbot.org/images/pokemon';
@@ -50,6 +51,7 @@ const PokemonList = () => {
               <PokemonCard 
                 pokemon={item}
                  key={item.name} 
+                 onAdd={onAdd}
                />
             )) : <div className="bg-warning text-center">Loading...</div> }
           </div>
