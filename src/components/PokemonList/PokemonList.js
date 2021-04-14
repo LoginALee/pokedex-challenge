@@ -45,16 +45,13 @@ const PokemonList = () => {
     return (
       <div className="row mt-5">
         <div className="col-4" >
-        {data ? 
-          (data.map((item) => 
-            <PokemonCard key={item.name} 
-               name={item.name}
-               img={item.img}
-               id={item.id}
-               height={item.height}
-               weight={item.weight}
-             />
-          )) : <div className="bg-warning text-center">Loading...</div> }
+          {data ? 
+            (data.map((item) => 
+              <PokemonCard 
+                pokemon={item}
+                 key={item.name} 
+               />
+            )) : <div className="bg-warning text-center">Loading...</div> }
           </div>
         </div>
      )
