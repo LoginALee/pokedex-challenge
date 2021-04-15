@@ -3,9 +3,12 @@ import React, { useState } from 'react';
 import PokemonList from './components/PokemonList/PokemonList'
 import Header from './components/Header/Header'
 import Cart from './components/Cart/Cart'
+import Order from './components/Order/Order'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
+  const [ cartItems, setCartItems ] = useState([]);
+  const [ order, setOrder ] = useState([]);
 
   const onAdd = (pokemon) =>{
     const exist = cartItems.find(item => item.id === pokemon.id);
@@ -29,20 +32,43 @@ function App() {
     }
   }
 
+  const onClean = () => {
+    setCartItems([]);
+  }
+
+  const onCreateOrder = (order) => {
+    setOrder(order);
+  }
+
   return (
-      <React.Fragment>
-        <Header countCartItems={cartItems.length} /> 
-        <div className="container">
-          <div className="row">
-            <Cart
-              cartItems={cartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-            />
-          </div>
-          <PokemonList onAdd={onAdd}/>
+    <Router>
+        <Header
+          countCartItems={cartItems.length}
+        /> 
+       <div className="container">
+          <Switch>
+             <Route path="/cart" render={() =>
+               <Cart
+                 cartItems={cartItems}
+                 onAdd={onAdd}
+                 onRemove={onRemove}
+                 onClean={onClean}
+                 onCreateOrder={onCreateOrder}
+               />
+             }/>
+             <Route path="/orders" render={() => 
+                 <Order
+                   order={order}
+                 />
+             }/>
+             <Route path="/" exact render={() =>
+               <PokemonList
+                 onAdd={onAdd}
+               />
+             }/>
+          </Switch>
         </div>
-      </React.Fragment>
+    </Router>
   );
 }
 

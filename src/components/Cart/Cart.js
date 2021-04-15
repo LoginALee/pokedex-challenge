@@ -1,8 +1,23 @@
 import React from 'react';
+import StripeCheckout from 'react-stripe-checkout'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 const Cart = (props) => {
-  const { cartItems, onAdd, onRemove } = props;
+  const { cartItems, onAdd, onRemove, onClean, onCreateOrder } = props;
   const totalPrice = cartItems.reduce((a, c) => a + c.id * c.cuantity, 0);
+
+  const handleToken = (token) => {
+    toast("Success! Your pokemons are on their way", { type: "success" });
+    let Order = {
+      details: token,
+      items: { cartItems, total: totalPrice }
+    }
+    onCreateOrder(Order);
+    onClean();
+  }
 
   return(
     <aside className="col align-self-end">
@@ -31,7 +46,15 @@ const Cart = (props) => {
           </div>
           <hr/>
           <div className="row">
-            <button className="btn-primary col-2 text-center" onClick={() => alert('Checkout')}>Checkout</button>
+            <StripeCheckout
+              stripeKey="pk_test_51IgDpJFNHOe0IlJVXaz0gojBTqzoHRxCFRoYPz1wosPIXW5DERDt6I5V8l89IGL01zzMeBbS3SCCyqBWtvTtRfvE00rYFxuQxB"
+              token={handleToken}
+              billingAddress
+              shippingAddress
+              amount={totalPrice * 100}
+              name="Pokemons"
+            />
+            <ToastContainer />
           </div>
         </div>
       ) : ''}
