@@ -20,8 +20,7 @@ const Cart = (props) => {
   }
 
   return(
-    <aside className="col align-self-end">
-      <h2> Cart items</h2>
+    <aside className="col align-self-end"> <h2> Cart items</h2>
       <div>
         {!cartItems.length ? <div>Cart is empty</div> : '' }
       </div>
@@ -47,7 +46,7 @@ const Cart = (props) => {
           <hr/>
           <div className="row">
             <StripeCheckout
-              stripeKey="pk_test_51IgDpJFNHOe0IlJVXaz0gojBTqzoHRxCFRoYPz1wosPIXW5DERDt6I5V8l89IGL01zzMeBbS3SCCyqBWtvTtRfvE00rYFxuQxB"
+              stripeKey={process.env.REACT_APP_STRIPE_KEY}
               token={handleToken}
               billingAddress
               shippingAddress
