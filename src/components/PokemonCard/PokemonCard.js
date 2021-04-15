@@ -6,7 +6,7 @@ const PokemonCard = ({ pokemon, onAdd }) => {
   const { id, name, height, weight, img } = pokemon;
 
   return (
-    <div className="col-4" >
+    <div className="col-4" data-testid="show-data">
       <div className="card mt-2" onClick={() => setOpen(!open)} aria-controls={"card-" + id} aria-expanded={open}>
         <img src={img} className="card-img-top"/>
           <div className="card-body" id={"card-" + name}>
@@ -22,7 +22,7 @@ const PokemonCard = ({ pokemon, onAdd }) => {
                  <p className="card-text">
                    Price: ${id}
                  </p>
-                 <button onClick={() => onAdd(pokemon)} className="btn btn-primary">Add to cart</button>
+                 <button data-testid={`add-cart-${id}`} onClick={() => onAdd(pokemon)} className="btn btn-primary">Add to cart</button>
               </div>
              </Collapse>
            </div>
