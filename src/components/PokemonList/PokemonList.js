@@ -44,7 +44,7 @@ const PokemonList = (props) => {
   }
 
     return (
-      <div className="row mt-2">
+      <div title="row" className="row mt-2">
           {data ? 
             (data.map((item) => 
               <PokemonCard 
@@ -52,7 +52,7 @@ const PokemonList = (props) => {
                  key={item.name} 
                  onAdd={onAdd}
                />
-            )) : <div className="bg-warning text-center">Loading...</div> }
+            )) : <div data-testid="loading" className="bg-warning text-center">Loading...</div> }
           </div>
      )
 }
