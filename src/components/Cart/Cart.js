@@ -2,11 +2,17 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CartItem from '../CartItem/CartItem'
 
 toast.configure();
 
-const Cart = (props) => {
-  const { cartItems, onAdd, onRemove, onClean, onCreateOrder } = props;
+const Cart = ({
+  cartItems,
+  onAdd,
+  onRemove,
+  onClean,
+  onCreateOrder
+}) => {
   const totalPrice = cartItems.reduce((a, c) => a + c.id * c.quantity, 0);
 
   const handleToken = (token) => {
@@ -20,45 +26,35 @@ const Cart = (props) => {
   }
 
   return(
-    <aside className="col align-self-end"> <h2> Cart items</h2>
+    <aside className="col align-self-end">
+      <h2>Cart items</h2>
       <div>
-        {!cartItems.length ? <div>Cart is empty</div> : '' }
+        {cartItems.length === 0 && <div>Cart is empty</div>}
       </div>
-      {cartItems.map((item) => (
-        <div key={item.id} className="row">
-          <div className="col-2">{item.name}</div>
-          <div className="col-2">
-            <button onClick={() => onAdd(item)} className="btn-success mr-2">+</button>
-            <button onClick={() => onRemove(item)} className="btn-danger">-</button>
-          </div>
-          <div className="col-2 text-right">
-            {item.quantity} x ${item.id.toFixed(2)}
-          </div>
+      {cartItems.length !== 0 && (cartItems.map((item) => 
+        <CartItem
+          key={item.name}
+          item={item}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          totalPrice={totalPrice}
+         />))}
+      {cartItems.length !== 0 && (
+        <div className="row">
+          <StripeCheckout
+            stripeKey={process.env.REACT_APP_STRIPE_KEY}
+            token={handleToken}
+            billingAddress
+            shippingAddress
+            amount={totalPrice * 100}
+            name="Pokemons"
+          />
+          <ToastContainer />
         </div>
-      ))}
-      {cartItems.length ?  (
-        <div>
-          <hr></hr>
-          <div className="row">
-            <div className="col-2">Total price</div>
-            <div className="col-1 text-right"><strong>${totalPrice.toFixed(2)}</strong></div>
-          </div>
-          <hr/>
-          <div className="row">
-            <StripeCheckout
-              stripeKey={process.env.REACT_APP_STRIPE_KEY}
-              token={handleToken}
-              billingAddress
-              shippingAddress
-              amount={totalPrice * 100}
-              name="Pokemons"
-            />
-            <ToastContainer />
-          </div>
-        </div>
-      ) : ''}
+      )}
     </aside>
-  )
+    )
 }
 
 export default Cart;
+
