@@ -7,7 +7,7 @@ toast.configure();
 
 const Cart = (props) => {
   const { cartItems, onAdd, onRemove, onClean, onCreateOrder } = props;
-  const totalPrice = cartItems.reduce((a, c) => a + c.id * c.cuantity, 0);
+  const totalPrice = cartItems.reduce((a, c) => a + c.id * c.quantity, 0);
 
   const handleToken = (token) => {
     toast("Success! Your pokemons are on their way", { type: "success" });
@@ -32,7 +32,7 @@ const Cart = (props) => {
             <button onClick={() => onRemove(item)} className="btn-danger">-</button>
           </div>
           <div className="col-2 text-right">
-            {item.cuantity} x ${item.id.toFixed(2)}
+            {item.quantity} x ${item.id.toFixed(2)}
           </div>
         </div>
       ))}

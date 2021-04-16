@@ -13,20 +13,20 @@ function App() {
   const onAdd = (pokemon) =>{
     const exist = cartItems.find(item => item.id === pokemon.id);
     if(exist){
-      setCartItems(cartItems.map(item => item.id === pokemon.id ? {...exist, cuantity: exist.cuantity + 1} : item));
+      setCartItems(cartItems.map(item => item.id === pokemon.id ? {...exist, quantity: exist.quantity + 1} : item));
     }else{
-      setCartItems([...cartItems, {...pokemon, cuantity: 1}]);
+      setCartItems([...cartItems, {...pokemon, quantity: 1}]);
     }
   }
 
   const onRemove = (pokemon) =>{
     const exist = cartItems.find((item) => item.id === pokemon.id);
-    if(exist.cuantity === 1){
+    if(exist.quantity === 1){
       setCartItems(cartItems.filter((item) => item.id !== pokemon.id));
     }else{
       setCartItems(
         cartItems.map((item) =>
-          item.id === pokemon.id ? {...exist, cuantity: exist.cuantity - 1} : item
+          item.id === pokemon.id ? {...exist, quantity: exist.quantity - 1} : item
         )
       );
     }
