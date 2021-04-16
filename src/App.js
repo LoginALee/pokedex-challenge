@@ -47,7 +47,7 @@ function App() {
         /> 
        <div className="container">
           <Switch>
-             <Route path="/cart" render={() =>
+             <Route path="/cart">
                <Cart
                  cartItems={cartItems}
                  onAdd={onAdd}
@@ -55,17 +55,17 @@ function App() {
                  onClean={onClean}
                  onCreateOrder={onCreateOrder}
                />
-             }/>
-             <Route path="/orders" render={() => 
+             </Route>
+             <Route path="/orders"> 
                  <Order
                    order={order}
                  />
-             }/>
-             <Route path="/" exact render={() =>
+             </Route>
+             <Route path="/" exact>
                <PokemonList
                  onAdd={onAdd}
                />
-             }/>
+             </Route>
           </Switch>
         </div>
     </Router>
