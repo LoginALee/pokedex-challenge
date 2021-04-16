@@ -1,24 +1,74 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react'; 
+import PokemonList from './components/PokemonList/PokemonList'
+import Header from './components/Header/Header'
+import Cart from './components/Cart/Cart'
+import Order from './components/Order/Order'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
+  const [ cartItems, setCartItems ] = useState([]);
+  const [ order, setOrder ] = useState([]);
+
+  const onAdd = (pokemon) =>{
+    const exist = cartItems.find(item => item.id === pokemon.id);
+    if(exist){
+      setCartItems(cartItems.map(item => item.id === pokemon.id ? {...exist, quantity: exist.quantity + 1} : item));
+    }else{
+      setCartItems([...cartItems, {...pokemon, quantity: 1}]);
+    }
+  }
+
+  const onRemove = (pokemon) =>{
+    const exist = cartItems.find((item) => item.id === pokemon.id);
+    if(exist.quantity === 1){
+      setCartItems(cartItems.filter((item) => item.id !== pokemon.id));
+    }else{
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === pokemon.id ? {...exist, quantity: exist.quantity - 1} : item
+        )
+      );
+    }
+  }
+
+  const onClean = () => {
+    setCartItems([]);
+  }
+
+  const onCreateOrder = (order) => {
+    setOrder(order);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+        <Header
+          countCartItems={cartItems.length}
+        /> 
+       <div className="container">
+          <Switch>
+             <Route path="/cart">
+               <Cart
+                 cartItems={cartItems}
+                 onAdd={onAdd}
+                 onRemove={onRemove}
+                 onClean={onClean}
+                 onCreateOrder={onCreateOrder}
+               />
+             </Route>
+             <Route path="/orders"> 
+                 <Order
+                   order={order}
+                 />
+             </Route>
+             <Route path="/" exact>
+               <PokemonList
+                 onAdd={onAdd}
+               />
+             </Route>
+          </Switch>
+        </div>
+    </Router>
   );
 }
 
