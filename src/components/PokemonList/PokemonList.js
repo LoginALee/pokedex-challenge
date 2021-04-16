@@ -45,15 +45,15 @@ const PokemonList = (props) => {
 
     return (
       <div className="row mt-2">
-          {data ? 
-            (data.map((item) => 
-              <PokemonCard 
-                pokemon={item}
-                 key={item.name} 
-                 onAdd={onAdd}
-               />
-            )) : <div className="bg-warning text-center">Loading...</div> }
-          </div>
+        {data ? 
+          (data.map((item) => 
+            <PokemonCard 
+              pokemon={item}
+              key={item.name} 
+              onAdd={onAdd}
+             />
+           )) : <div className="bg-warning text-center">Loading...</div> }
+       </div>
      )
 }
 

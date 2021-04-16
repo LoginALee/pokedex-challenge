@@ -1,6 +1,4 @@
-a {
-  text-decoration: none;
-}
+a { text-decoration: none; }
 
 nav {
   display: flex;
@@ -19,6 +17,4 @@ nav {
   list-style: none;
 }
 
-.App {
-  text-align: center;
-}
+.App { text-align: center; }

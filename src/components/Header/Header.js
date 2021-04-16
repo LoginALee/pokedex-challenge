@@ -12,10 +12,10 @@ const Header = (props) => {
       </Link>
       <ul className="nav-links">
         <Link style={navStyle} to='/cart'>
-          <li> Cart{' '}
-            {countCartItems ? (
-              <button className="badge badge-success badge-pill">{countCartItems}</button>
-            ) : ('')} 
+          <li>Cart 
+            {countCartItems !== 0 && 
+              <button className="badge ml-1 badge-success badge-pill">{countCartItems}</button>
+            } 
           </li>
         </Link>
         <Link style={navStyle} to='/orders'>
